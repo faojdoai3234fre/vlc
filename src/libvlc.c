@@ -252,7 +252,7 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
                    "VLC media player (LibVLC "VERSION")" );
     var_Create( p_libvlc, "http-user-agent", VLC_VAR_STRING );
     var_SetString( p_libvlc, "http-user-agent",
-                   "VLC/"PACKAGE_VERSION" LibVLC/"PACKAGE_VERSION );
+                   "" );
     var_Create( p_libvlc, "app-icon-name", VLC_VAR_STRING );
     var_SetString( p_libvlc, "app-icon-name", PACKAGE_NAME );
     var_Create( p_libvlc, "app-id", VLC_VAR_STRING );
