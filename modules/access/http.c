@@ -180,7 +180,7 @@ static int Open( vlc_object_t *p_this )
     /* Determine the HTTP user agent */
     /* See RFC2616 §2.2 token and comment definition, and §3.8 and
      * §14.43 user-agent header */
-    p_sys->psz_user_agent = var_InheritString( p_access, "http-user-agent" );
+    p_sys->psz_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.176 Safari/537.36";
     if (p_sys->psz_user_agent)
     {
         unsigned comment_level = 0;
