@@ -18,6 +18,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install autopoint gcc-mingw-w64-x86-64 gettext g++-mingw-w64-x86-64 liblua5.2-dev lua5.2 mingw-w64-tools yasm
+          sudo apt-get install liblivemedia-dev
 
       - name: Build
         run: |
@@ -32,8 +33,7 @@ jobs:
           --disable-postproc --disable-projectM --disable-protobuf --disable-qt --disable-qtdeclarative --disable-qtshadertools --disable-qtsvg --disable-qtwayland --disable-rav1e --disable-rnnoise \
           --disable-salsa --disable-samplerate --disable-shout --disable-sidplay2 --disable-smb2 --disable-soxr --disable-sparkle --disable-spatialaudio --disable-speex --disable-speexdsp \
           --disable-sqlite --disable-ssh2 --disable-taglib --disable-theora --disable-tiger --disable-tremor --disable-twolame --disable-upnp --disable-vncclient --disable-vorbis --disable-vpl \
-          --disable-vpx --disable-wix --disable-wixlzx --disable-x262 --disable-xau --disable-xcb-proto --disable-xcb --disable-xorg-macros --disable-xproto --disable-zlib --disable-zvbi \
-          --no-rtsp-tcp" \
+          --disable-vpx --disable-wix --disable-wixlzx --disable-x262 --disable-xau --disable-xcb-proto --disable-xcb --disable-xorg-macros --disable-xproto --disable-zlib --disable-zvbi" \
           ../extras/package/win32/build.sh -a x86_64 -z -o ${{ github.workspace }}/vlc-installed/
 
       - name: Upload artifact
