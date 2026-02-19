@@ -24,6 +24,7 @@ jobs:
           mkdir vlc-installed
           mkdir build
           cd build
+          CONTRIBFLAGS="--disable-amf --disable-aom --disable-aribb24 --disable-aribb25 --disable-asdcplib --disable-basu --disable-bluray --disable-bpg --disable-breakpad --disable-caca" \
           ../extras/package/win32/build.sh -a x86_64 -z -o ${{ github.workspace }}/vlc-installed/
 
       - name: Upload artifact
