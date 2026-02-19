@@ -27,7 +27,12 @@ jobs:
           CONTRIBFLAGS="--disable-amf --disable-aom --disable-aribb24 --disable-aribb25 --disable-asdcplib --disable-basu --disable-bluray --disable-bpg --disable-breakpad --disable-caca \
           --disable-cargo-c --disable-chromaprint --disable-daala --disable-dav1d --disable-decklink --disable-dvbcsa --disable-dvbpsi --disable-dvdcss --disable-dvdnav --disable-dvdread \
           --disable-ebml --disable-ffi --disable-flac --disable-fluid --disable-fluidlite --disable-gettext --disable-jpeg --disable-kate --disable-lame --disable-libarchive --disable-libaribcaption \
-          --disable-libdsm --disable-libebur128 --disable-librist --disable-libtasn1 --disable-live555 --disable-lua --disable-mad --disable-markupsafe --disable-matroska" \
+          --disable-libdsm --disable-libebur128 --disable-librist --disable-libtasn1 --disable-live555 --disable-lua --disable-mad --disable-markupsafe --disable-matroska --disable-medialibrary \
+          --disable-modplug --disable-mpcdec --disable-mpg123 --disable-mysofa --disable-ncurses --disable-nfs --disable-ogg --disable-openapv --disable-openjpeg --disable-opus --disable-png \
+          --disable-postproc --disable-projectM --disable-protobuf --disable-qt --disable-qtdeclarative --disable-qtshadertools --disable-qtsvg --disable-qtwayland --disable-rav1e --disable-rnnoise \
+          --disable-salsa --disable-samplerate --disable-shout --disable-sidplay2 --disable-smb2 --disable-soxr --disable-sparkle --disable-spatialaudio --disable-speex --disable-speexdsp \
+          --disable-sqlite --disable-ssh2 --disable-taglib --disable-theora --disable-tiger --disable-tremor --disable-twolame --disable-upnp --disable-vncclient --disable-vorbis --disable-vpl \
+          --disable-vpx --disable-wix --disable-wixlzx --disable-x262 --disable-xau --disable-xcb-proto --disable-xcb --disable-xorg-macros --disable-xproto --disable-zlib --disable-zvbi" \
           ../extras/package/win32/build.sh -a x86_64 -z -o ${{ github.workspace }}/vlc-installed/
 
       - name: Upload artifact
