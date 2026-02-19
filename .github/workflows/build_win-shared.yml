@@ -26,7 +26,8 @@ jobs:
           cd build
           CONTRIBFLAGS="--disable-amf --disable-aom --disable-aribb24 --disable-aribb25 --disable-asdcplib --disable-basu --disable-bluray --disable-bpg --disable-breakpad --disable-caca \
           --disable-cargo-c --disable-chromaprint --disable-daala --disable-dav1d --disable-decklink --disable-dvbcsa --disable-dvbpsi --disable-dvdcss --disable-dvdnav --disable-dvdread \
-          --disable-ebml --disable-ffi --disable-flac --disable-fluid --disable-fluidlite" \
+          --disable-ebml --disable-ffi --disable-flac --disable-fluid --disable-fluidlite --disable-gettext --disable-jpeg --disable-kate --disable-lame --disable-libarchive --disable-libaribcaption \
+          --disable-libdsm --disable-libebur128 --disable-librist --disable-libtasn1 --disable-live555 --disable-lua --disable-mad --disable-markupsafe --disable-matroska" \
           ../extras/package/win32/build.sh -a x86_64 -z -o ${{ github.workspace }}/vlc-installed/
 
       - name: Upload artifact
