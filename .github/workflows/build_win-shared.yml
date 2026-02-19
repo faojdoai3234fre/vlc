@@ -17,7 +17,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install autopoint gcc-mingw-w64-x86-64 gettext g++-mingw-w64-x86-64 liblua5.2-dev lua5.2 mingw-w64-tools yasm
+          sudo apt-get install autopoint gcc-mingw-w64-x86-64 gettext g++-mingw-w64-x86-64 mingw-w64-tools yasm
+          sudo apt-get install libdvdread7 liblua5.2-dev lua5.2
 
       - name: Build
         run: |
