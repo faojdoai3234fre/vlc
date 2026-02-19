@@ -21,15 +21,4 @@ jobs:
 
       - name: Build
         run: |
-          mkdir vlc-installed
-          mkdir build
-          cd build
-          ../extras/package/win32/build.sh -a x86_64 -z -o ${{ github.workspace }}/vlc-installed/
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: VLC-Win64-Shared
-          path: ${{ github.workspace }}/vlc-installed
-          if-no-files-found: ignore
-          retention-days: 0
+          contrib/bootstrap -h
