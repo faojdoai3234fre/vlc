@@ -90,6 +90,7 @@ namespace adaptive
                void reset();
                std::string useragent;
                std::string referer;
+               std::string origin;
                LibVLCHTTPSource *source;
                ChunksSourceStream *sourceStream;
                stream_t *stream;
