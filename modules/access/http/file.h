@@ -38,13 +38,14 @@ struct vlc_http_resource;
  * @param mgr HTTP connection manager
  * @param url URL of the file to read
  * @param ua user agent string (or NULL to ignore)
+ * @param origin origin URL (or NULL to ignore)
  * @param ref referral URL (or NULL to ignore)
  *
  * @return an HTTP resource object pointer, or NULL on error
  */
 struct vlc_http_resource *vlc_http_file_create(struct vlc_http_mgr *mgr,
                                                const char *url, const char *ua,
-                                               const char *ref);
+                                               const char *origin, const char *ref);
 
 /**
  * Gets file size.
