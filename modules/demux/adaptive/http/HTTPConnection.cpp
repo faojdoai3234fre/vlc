@@ -226,7 +226,7 @@ class adaptive::http::LibVLCHTTPSource : public adaptive::BlockStreamInterface
         }
 
         int create(const ConnectionParams &params,const std::string &ua,
-                   const std::string &ref, const BytesRange &range)
+                   const std::string &origin, const std::string &ref, const BytesRange &range)
         {
             auto *tpl = static_cast<struct restuple *>(
                 std::malloc(sizeof(struct restuple)));
@@ -239,6 +239,7 @@ class adaptive::http::LibVLCHTTPSource : public adaptive::BlockStreamInterface
             if (vlc_http_res_init(&tpl->resource, &this->callbacks, http_mgr,
                                   params.getUrl().c_str(),
                                   ua.empty() ? nullptr : ua.c_str(),
+                                  origin.empty() ? nullptr : origin.c_str(),
                                   ref.empty() ? nullptr : ref.c_str()))
             {
                 std::free(tpl);
@@ -360,6 +361,12 @@ LibVLCHTTPConnection::LibVLCHTTPConnection(vlc_object_t *p_object_, AuthStorage 
         useragent = std::string(psz_useragent);
         free(psz_useragent);
     }
+    char *psz_origin = var_InheritString(p_object_, "http-origin");
+    if(psz_origin)
+    {
+        origin = std::string(psz_origin);
+        free(psz_origin);
+    }
     char *psz_referer = var_InheritString(p_object_, "http-referrer");
     if(psz_referer)
     {
@@ -416,7 +423,7 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
     else
         msg_Dbg(p_object, "Retrieving %s", params.getUrl().c_str());
 
-    if(source->create(params, useragent,referer, range))
+    if(source->create(params, useragent, origin, referer, range))
         return RequestStatus::GenericError;
 
     /* Set credentials from URL. Deprecated warning will follow */
