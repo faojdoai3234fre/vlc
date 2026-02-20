@@ -55,13 +55,14 @@ struct vlc_http_resource
     char *username;
     char *password;
     char *agent;
+    char *origin;
     char *referrer;
 };
 
 int vlc_http_res_init(struct vlc_http_resource *,
                       const struct vlc_http_resource_cbs *cbs,
                       struct vlc_http_mgr *mgr,
-                      const char *uri, const char *ua, const char *ref);
+                      const char *uri, const char *ua, const char *origin, const char *ref);
 
 /**
  * Destroys an HTTP resource.
