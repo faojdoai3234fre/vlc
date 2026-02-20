@@ -87,6 +87,7 @@ typedef struct
     /* From uri */
     vlc_url_t url;
     char    *psz_user_agent;
+    char    *psz_origin;
     char    *psz_referrer;
     char    *psz_username;
     char    *psz_password;
@@ -153,6 +154,7 @@ static int Open( vlc_object_t *p_this )
     p_sys->b_icecast = false;
     p_sys->psz_location = NULL;
     p_sys->psz_user_agent = NULL;
+    p_sys->psz_origin = NULL;
     p_sys->psz_referrer = NULL;
     p_sys->psz_username = NULL;
     p_sys->psz_password = NULL;
@@ -214,6 +216,9 @@ static int Open( vlc_object_t *p_this )
         }
     }
 
+    /* HTTP origin */
+    p_sys->psz_origin = var_InheritString( p_access, "http-origin" );
+    
     /* HTTP referrer */
     p_sys->psz_referrer = var_InheritString( p_access, "http-referrer" );
 
@@ -353,6 +358,7 @@ error:
     free( p_sys->psz_mime );
     free( p_sys->psz_location );
     free( p_sys->psz_user_agent );
+    free( p_sys->psz_origin );
     free( p_sys->psz_referrer );
     free( p_sys->psz_username );
     free( p_sys->psz_password );
@@ -380,6 +386,7 @@ static void Close( vlc_object_t *p_this )
     free( p_sys->psz_icy_title );
 
     free( p_sys->psz_user_agent );
+    free( p_sys->psz_origin );
     free( p_sys->psz_referrer );
     free( p_sys->psz_username );
     free( p_sys->psz_password );
@@ -662,6 +669,10 @@ static int Connect( stream_t *p_access )
     /* User Agent */
     vlc_memstream_printf( &stream, "User-Agent: %s\r\n",
                           p_sys->psz_user_agent );
+    /* Origin */
+    if (p_sys->psz_origin)
+        vlc_memstream_printf( &stream, "Origin: %s\r\n",
+                              p_sys->psz_origin );
     /* Referrer */
     if (p_sys->psz_referrer)
         vlc_memstream_printf( &stream, "Referer: %s\r\n",
