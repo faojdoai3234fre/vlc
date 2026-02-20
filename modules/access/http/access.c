@@ -179,11 +179,13 @@ static int Open(vlc_object_t *obj)
         goto error;
 
     char *ua = var_InheritString(obj, "http-user-agent");
+    char *origin = var_InheritString(obj, "http-origin");
     char *referer = var_InheritString(obj, "http-referrer");
     bool live = var_InheritBool(obj, "http-continuous");
 
     sys->resource = (live ? vlc_http_live_create : vlc_http_file_create)(
-        sys->manager, access->psz_url, ua, referer);
+        sys->manager, access->psz_url, ua, origin, referer);
+    free(origin);
     free(referer);
     free(ua);
 
