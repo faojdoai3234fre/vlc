@@ -296,6 +296,10 @@ vlc_module_begin()
         change_volatile()
     add_bool("http-forward-cookies", true, N_("Cookies forwarding"),
              N_("Forward cookies across HTTP redirections."))
+    add_string("http-origin", NULL, N_("Origin"),
+               N_("Provide the origin URL, i.e. HTTP \"Origin\" (sic)."))
+        change_safe()
+        change_volatile()
     add_string("http-referrer", NULL, N_("Referrer"),
                N_("Provide the referral URL, i.e. HTTP \"Referer\" (sic)."))
         change_safe()
