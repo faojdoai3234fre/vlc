@@ -68,6 +68,9 @@ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
     if (res->referrer != NULL) /* TODO: validate URL */
         vlc_http_msg_add_header(req, "Referer", "%s", res->referrer);
 
+    if (res->origin != NULL) /* TODO: validate URL */
+        vlc_http_msg_add_header(req, "Origin", "%s", res->origin);
+
     vlc_http_msg_add_cookies(req, vlc_http_mgr_get_jar(res->manager));
 
     /* TODO: vlc_http_msg_add_header(req, "TE", "gzip, deflate"); */
@@ -148,6 +151,7 @@ int vlc_http_res_get_status(struct vlc_http_resource *res)
 static void vlc_http_res_deinit(struct vlc_http_resource *res)
 {
     free(res->referrer);
+    free(res->origin);
     free(res->agent);
     free(res->password);
     free(res->username);
@@ -168,7 +172,7 @@ void vlc_http_res_destroy(struct vlc_http_resource *res)
 int vlc_http_res_init(struct vlc_http_resource *restrict res,
                       const struct vlc_http_resource_cbs *cbs,
                       struct vlc_http_mgr *mgr,
-                      const char *uri, const char *ua, const char *ref)
+                      const char *uri, const char *ua, const char *origin, const char *ref)
 {
     vlc_url_t url;
     bool secure;
@@ -205,6 +209,7 @@ int vlc_http_res_init(struct vlc_http_resource *restrict res,
                                                : NULL;
     res->agent = (ua != NULL) ? strdup(ua) : NULL;
     res->referrer = (ref != NULL) ? strdup(ref) : NULL;
+    res->origin = (origin != NULL) ? strdup(origin) : NULL;
 
     const char *path = url.psz_path;
     if (path == NULL)
