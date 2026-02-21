@@ -53,7 +53,7 @@ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
     {
         const char *lang = vlc_gettext("C");
         if (!strcmp(lang, "C"))
-            lang = "en_US";
+            lang = "en_US,en;q=0.5";
         vlc_http_msg_add_header(req, "Accept-Language", "%s", lang);
     }
 
