@@ -66,7 +66,14 @@ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
         vlc_http_msg_add_agent(req, res->agent);
 
     if (res->referrer != NULL) /* TODO: validate URL */
+    {
         vlc_http_msg_add_header(req, "Referer", "%s", res->referrer);
+        char *origin = malloc(strlen(res->referrer) + 1);
+        strcpy(origin, res->referrer);
+        origin[strlen(origin)-1] = 0;
+        vlc_http_msg_add_header(req, "Origin", "%s", origin);
+        free(origin);
+    }
 
     vlc_http_msg_add_cookies(req, vlc_http_mgr_get_jar(res->manager));
 
