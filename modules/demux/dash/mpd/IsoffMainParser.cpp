@@ -298,6 +298,19 @@ void    IsoffMainParser::parseAdaptationSets  (MPD *mpd, Node *periodNode, BaseP
             continue;
 
         parseCommonAttributesElements(*it, adaptationSet);
+        
+        std::vector<Node *> contentProtections = DOMHelper::getElementByTagName(*it, "ContentProtection", getDASHNamespace(), false);
+        std::vector<Node *>::const_iterator contentProtectionsIt;
+        for(contentProtectionsIt = contentProtections.begin(); contentProtectionsIt != contentProtections.end(); ++contentProtectionsIt)
+        {
+            if((*contentProtectionsIt)->getAttributeValue("schemeIdUri") == NS_DASH)
+            {
+                std::string kid = (*contentProtectionsIt)->getAttributeValue("cenc:default_KID");
+                kid.erase(std::remove(kid.begin(), kid.end(), '-'), kid.end());
+                std::transform(kid.begin(), kid.end(), kid.begin(), [](unsigned char c){ return std::tolower(c); });
+                adaptationSet->kid = kid;
+            }
+        }
 
         if((*it)->hasAttribute("lang"))
             adaptationSet->setLang((*it)->getAttributeValue("lang"));
