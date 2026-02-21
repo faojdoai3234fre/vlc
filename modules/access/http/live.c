@@ -34,7 +34,7 @@
 static int vlc_http_live_req(const struct vlc_http_resource *res,
                              struct vlc_http_msg *req, void *opaque)
 {
-    vlc_http_msg_add_header(req, "Accept-Encoding", "gzip, deflate");
+    vlc_http_msg_add_header(req, "Accept-Encoding", "gzip, deflate, br");
     (void) res;
     (void) opaque;
     return 0;
