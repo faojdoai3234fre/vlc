@@ -133,7 +133,6 @@ class adaptive::http::LibVLCHTTPSource : public adaptive::BlockStreamInterface
         {
             vlc_http_msg_add_header(req, "Accept-Encoding", "deflate, gzip, br");
             vlc_http_msg_add_header(req, "Cache-Control", "no-cache");
-            vlc_http_msg_add_header(req, "Connection", "keep-alive");
             vlc_http_msg_add_header(req, "DNT", "1");
             vlc_http_msg_add_header(req, "Sec-Fetch-Dest", "empty");
             vlc_http_msg_add_header(req, "Sec-Fetch-Mode", "cors");
