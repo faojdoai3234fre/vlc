@@ -62,7 +62,7 @@ ISegment::~ISegment()
 bool ISegment::prepareChunk(SharedResources *res, SegmentChunk *chunk, BaseRepresentation *rep)
 {
     CommonEncryption enc = encryption;
-    enc.mergeWith(rep->intheritEncryption());
+    enc.mergeWith(rep->inheritEncryption());
 
     if(enc.method != CommonEncryption::Method::None)
     {

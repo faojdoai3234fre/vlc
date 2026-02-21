@@ -64,6 +64,7 @@ namespace adaptive
                 void                            setLang( const std::string &lang );
                 void                            debug(vlc_object_t *,int = 0) const;
                 std::string                     description;
+                std::string                     kid;
 
             protected:
                 Role                            role;

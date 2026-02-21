@@ -695,9 +695,6 @@ static int Connect( stream_t *p_access )
         free( auth );
     }
 
-    /* ICY meta data request */
-    vlc_memstream_puts( &stream, "Icy-MetaData: 1\r\n" );
-
     vlc_memstream_puts( &stream, "\r\n" );
 
     if( vlc_memstream_close( &stream ) )
