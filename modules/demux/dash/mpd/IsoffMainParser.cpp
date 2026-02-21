@@ -44,6 +44,7 @@
 #include "../../adaptive/tools/Debug.hpp"
 #include "../../adaptive/tools/Conversions.hpp"
 #include <vlc_stream.h>
+#include <algorithm>
 #include <cstdio>
 #include <limits>
 
