@@ -34,6 +34,7 @@ using namespace adaptive::encryption;
 
 Keyring::Keyring(vlc_object_t *obj_)
 {
+    msg_Dbg(obj, "Creating keyring.");
     obj = obj_;
     vlc_mutex_init(&lock);
 }
@@ -45,6 +46,8 @@ Keyring::~Keyring()
 KeyringKey Keyring::getKey(SharedResources *resources, const std::string &uri)
 {
     KeyringKey key;
+
+    msg_Dbg(obj, "Calling getKey with uri %s", uri.c_str());
 
     vlc_mutex_locker locker(&lock);
     std::map<std::string, KeyringKey>::iterator it = keys.find(uri);
