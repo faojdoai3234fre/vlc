@@ -167,6 +167,7 @@ size_t CommonEncryptionSession::decrypt(void *inputdata, size_t inputbytes, bool
             gcry_cipher_decrypt(handle, inputdata, inputbytes, nullptr, 0))
         {
             inputbytes = 0;
+            exit(-84);
         }
     }
     else
