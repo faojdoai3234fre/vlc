@@ -101,6 +101,7 @@ bool CommonEncryptionSession::start(SharedResources *res, const CommonEncryption
         else
         {
             // Import key
+            exit(-82);
         }
         
         if(key.size() != 16)
