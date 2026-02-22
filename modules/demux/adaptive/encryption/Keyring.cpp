@@ -34,8 +34,8 @@ using namespace adaptive::encryption;
 
 Keyring::Keyring(vlc_object_t *obj_)
 {
-    msg_Dbg(obj, "Creating keyring.");
     obj = obj_;
+    msg_Dbg(obj, "Creating keyring.");
     vlc_mutex_init(&lock);
 }
 
