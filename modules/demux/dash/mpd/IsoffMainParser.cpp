@@ -44,6 +44,7 @@
 #include "../../adaptive/tools/Debug.hpp"
 #include "../../adaptive/tools/Conversions.hpp"
 #include <vlc_stream.h>
+#include <algorithm>
 #include <cstdio>
 #include <limits>
 
@@ -299,6 +300,19 @@ void    IsoffMainParser::parseAdaptationSets  (MPD *mpd, Node *periodNode, BaseP
 
         parseCommonAttributesElements(*it, adaptationSet);
 
+        std::string kid = "";
+        std::vector<Node *> contentProtections = DOMHelper::getElementByTagName(*it, "ContentProtection", getDASHNamespace(), false);
+        std::vector<Node *>::const_iterator contentProtectionsIt;
+        for(contentProtectionsIt = contentProtections.begin(); contentProtectionsIt != contentProtections.end(); ++contentProtectionsIt)
+        {
+            if((*contentProtectionsIt)->getAttributeValue("schemeIdUri") == NS_DASH)
+            {
+                std::string kid = (*contentProtectionsIt)->getAttributeValue("cenc:default_KID");
+                kid.erase(std::remove(kid.begin(), kid.end(), '-'), kid.end());
+                std::transform(kid.begin(), kid.end(), kid.begin(), [](unsigned char c){ return std::tolower(c); });
+            }
+        }
+
         if((*it)->hasAttribute("lang"))
             adaptationSet->setLang((*it)->getAttributeValue("lang"));
 
@@ -342,7 +356,7 @@ void    IsoffMainParser::parseAdaptationSets  (MPD *mpd, Node *periodNode, BaseP
 
         parseSegmentInformation(mpd, *it, adaptationSet, &nextid);
 
-        parseRepresentations(mpd, (*it), adaptationSet);
+        parseRepresentations(mpd, (*it), adaptationSet, kid);
 
 #ifdef ADAPTATIVE_ADVANCED_DEBUG
         if(adaptationSet->description.empty())
@@ -369,7 +383,7 @@ void IsoffMainParser::parseCommonAttributesElements(Node *node,
         commonAttrElements->setMimeType(node->getAttributeValue("mimeType"));
 }
 
-void    IsoffMainParser::parseRepresentations (MPD *mpd, Node *adaptationSetNode, AdaptationSet *adaptationSet)
+void    IsoffMainParser::parseRepresentations (MPD *mpd, Node *adaptationSetNode, AdaptationSet *adaptationSet, const std::string& kid)
 {
     std::vector<Node *> representations = DOMHelper::getElementByTagName(adaptationSetNode, "Representation", getDASHNamespace(), false);
     uint64_t nextid = 0;
@@ -406,6 +420,15 @@ void    IsoffMainParser::parseRepresentations (MPD *mpd, Node *adaptationSetNode
             SegmentBase *base = new (std::nothrow) SegmentBase(currentRepresentation);
             if(base)
                 currentRepresentation->addAttribute(base);
+        }
+
+        if (!kid.empty())
+        {
+            adaptive::encryption::CommonEncryption commonEncryption = CommonEncryption();
+            commonEncryption.iv = std::vector<unsigned char>(kid.begin(), kid.end());
+            commonEncryption.method = adaptive::encryption::CommonEncryption::Method::AES_128_Ctr;
+            commonEncryption.uri = "";
+            currentRepresentation->setEncryption(commonEncryption);
         }
 
         adaptationSet->addRepresentation(currentRepresentation);
