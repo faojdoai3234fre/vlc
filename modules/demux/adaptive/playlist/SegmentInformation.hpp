@@ -77,7 +77,7 @@ namespace adaptive
                 virtual void pruneBySegmentNumber(uint64_t);
                 virtual void pruneByPlaybackTime(vlc_tick_t);
                 void setEncryption(const CommonEncryption &);
-                const CommonEncryption & intheritEncryption() const;
+                const CommonEncryption & inheritEncryption() const;
 
             protected:
                 std::vector<SegmentInformation *> childs;

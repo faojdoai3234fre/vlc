@@ -131,23 +131,12 @@ class adaptive::http::LibVLCHTTPSource : public adaptive::BlockStreamInterface
         int formatRequest(const struct vlc_http_resource *,
                           struct vlc_http_msg *req)
         {
-            vlc_http_msg_add_header(req, "Accept-Encoding", "deflate, gzip");
+            vlc_http_msg_add_header(req, "Accept-Encoding", "deflate, gzip, br");
             vlc_http_msg_add_header(req, "Cache-Control", "no-cache");
-            if(range.isValid())
-            {
-                if(range.getEndByte() > 0)
-                {
-                    if (vlc_http_msg_add_header(req, "Range", "bytes=%zu-%zu",
-                                                range.getStartByte(), range.getEndByte()))
-                        return -1;
-                }
-                else
-                {
-                    if (vlc_http_msg_add_header(req, "Range", "bytes=%zu-",
-                                                range.getStartByte()))
-                        return -1;
-                }
-            }
+            vlc_http_msg_add_header(req, "DNT", "1");
+            vlc_http_msg_add_header(req, "Sec-Fetch-Dest", "empty");
+            vlc_http_msg_add_header(req, "Sec-Fetch-Mode", "cors");
+            vlc_http_msg_add_header(req, "Sec-Fetch-Site", "cross-site");
             return 0;
         }
 

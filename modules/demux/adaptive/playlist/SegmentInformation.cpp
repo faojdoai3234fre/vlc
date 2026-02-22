@@ -183,10 +183,10 @@ void SegmentInformation::pruneBySegmentNumber(uint64_t num)
         templ->pruneBySequenceNumber(num);
 }
 
-const CommonEncryption & SegmentInformation::intheritEncryption() const
+const CommonEncryption & SegmentInformation::inheritEncryption() const
 {
     if(parent && commonEncryption.method == CommonEncryption::Method::None)
-        return parent->intheritEncryption();
+        return parent->inheritEncryption();
     return commonEncryption;
 }
 

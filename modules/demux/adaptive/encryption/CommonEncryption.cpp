@@ -94,6 +94,31 @@ bool CommonEncryptionSession::start(SharedResources *res, const CommonEncryption
         }
         ctx = handle;
     }
+    else if(encryption.method == CommonEncryption::Method::AES_128_Ctr)
+    {
+        if(!encryption.uri.empty())
+            key = res->getKeyring()->getKey(res, encryption.uri);
+        else
+        {
+            // Import key
+            exit(-82);
+        }
+        
+        if(key.size() != 16)
+            return false;
+
+        vlc_gcrypt_init();
+        gcry_cipher_hd_t handle;
+        if( gcry_cipher_open(&handle, GCRY_CIPHER_AES, GCRY_CIPHER_MODE_CTR, 0) ||
+                gcry_cipher_setkey(handle, &key[0], 16) ||
+                gcry_cipher_setiv(handle, &encryption.iv[0], 16) )
+        {
+            gcry_cipher_close(handle);
+            ctx = nullptr;
+            return false;
+        }
+        ctx = handle;
+    }
 #endif
     return true;
 }
@@ -134,6 +159,15 @@ size_t CommonEncryptionSession::decrypt(void *inputdata, size_t inputbytes, bool
                 if(i+1==pad)
                     inputbytes -= pad;
             }
+        }
+    }
+    else if(encryption.method == CommonEncryption::Method::AES_128_Ctr && ctx)
+    {
+        if ((inputbytes % 16) != 0 || inputbytes < 16 ||
+            gcry_cipher_decrypt(handle, inputdata, inputbytes, nullptr, 0))
+        {
+            inputbytes = 0;
+            exit(-84);
         }
     }
     else

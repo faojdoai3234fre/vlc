@@ -38,6 +38,7 @@ namespace adaptive
                 {
                     None,
                     AES_128,
+                    AES_128_Ctr,
                     AES_Sample,
                 } method;
                 std::string uri;
